@@ -15,8 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-
+from .views import *
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/v1/',include('api.urls')),
+    path('ListContest/',ListContest.as_view()),
+    path('ListAllContest/',ListAllContest.as_view())
 ]
