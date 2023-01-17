@@ -29,15 +29,51 @@ class ListContest(ListAPIView):
     queryset = Contests.objects.all()
     serializer_class = ContestSerializer
     def list(self,request):
-        queryset = self.get_queryset()
         start_time = time.time()
         Contests.objects.all().delete()
         x = CreateContestsThread(100)
         x.run()
+        queryset = self.get_queryset()
+        
         serializer = ContestSerializer(queryset,many=True)
         print("--- %s seconds ---" % (time.time() - start_time))
         return Response(serializer.data)
+
+class CodeForcesContests(ListAPIView):
+    queryset = Contests.objects.all()
+    serializer_class = ContestSerializer
+    def list(self,request):
+        start_time = time.time()
+        Contests.objects.filter(Name_Of_Website="CodeForces").delete()
+        x = CreateContestsThread(100)
+        x.run_codeforces()
+        queryset = self.get_queryset()
+        
+        serializer = ContestSerializer(queryset,many=True)
+        print("--- %s seconds ---" % (time.time() - start_time))
+        return Response(serializer.data)
+class ClistContests(ListAPIView):
+    queryset = Contests.objects.all()
+    serializer_class = ContestSerializer
+    def list(self,request):
+        start_time = time.time()
+        Contests.objects.filter(Name_Of_Website="Clist").delete()
+        x = CreateContestsThread(100)
+        x.run_clist()
+        queryset = self.get_queryset()
+        
+        serializer = ContestSerializer(queryset,many=True)
+        print("--- %s seconds ---" % (time.time() - start_time))
+        return Response(serializer.data)
+class ListAllClistContest(ListAPIView):
+    serializer_class = ContestSerializer
+    pagination_class = MyClistPagination
+    queryset = Contests.objects.filter(Name_Of_Website="Clist")
 class ListAllContest(ListAPIView):
     serializer_class = ContestSerializer
     pagination_class = MyContestPagination
     queryset = Contests.objects.all()
+class ListAllCodeForcesContest(ListAPIView):
+    serializer_class = ContestSerializer
+    pagination_class = MyCodeForcesPagination
+    queryset = Contests.objects.filter(Name_Of_Website="CodeForces")

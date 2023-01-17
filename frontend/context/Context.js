@@ -9,7 +9,7 @@ export const ContextProvider = ({ children }) => {
     const [user,setuser] = useState(null)
     const [invert, setinvert] = useState(false)
     const [Contests, setContests] = useState([])
-    const [nexturl, setnexturl] = useState('http://127.0.0.1:8000/api/v1/ListAllContest')
+    let [nexturl, setnexturl] = useState('http://127.0.0.1:8000/api/v1/ListAllContest')
     const openoffcanvas = () =>{
 		
         document.getElementById('offcanvas').classList.toggle('smenu1')

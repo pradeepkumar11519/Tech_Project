@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { IoMdArrowDropdown } from 'react-icons/io'
 import { useRouter } from 'next/router'
-export default function Dropdown() {
+export default function Dropdown({children}) {
     const [activestate,setactivestate] = useState()
     const router = useRouter()
     useEffect(()=>{
@@ -31,34 +31,24 @@ export default function Dropdown() {
                     <a  onClick={()=>{
                         document.getElementById('dropdown').classList.toggle('active')
                     }} className={`cursor-pointer  text-md bg-black  text-white rounded-md transition-all font-medium  fade-in-out p-2 link 
-            `}>USER </a>
+            `}>{children} </a>
              
               
-                <div id="dropdown-menu"  className="dropdown-menu absolute  left-[-48px] top-10 bg-black invert p-2    transition-all fade-in-out my-[20px] translate-y-[-10px] pointer-events-none border-2 border-white">
+                <div id="dropdown-menu"  className="dropdown-menu absolute  left-[-48px] top-10 bg-black invert p-2    transition-all fade-in-out translate-y-[-10px] pointer-events-none border-2 border-white">
                     <ul className='mx-5'>
                       
                         <li className='my-2 text-xl '>
-                            <Link href="/LOGIN_SIGNUP"><div className={`text-white ${router.pathname==="/Videos"?"text-rose-500":""}`}>LOGIN/SIGNUP</div></Link>
+                            <Link href="/COMPETE/CodeForces"><div className={`text-white ${router.pathname==="/COMPETE/CodeForces"?"text-rose-500":""}`}>CodeForces</div></Link>
                         </li>
                         
                         
                       
                         <li className='my-2 text-xl '>
-                            <Link href="/ChatRoom"><div className={`text-white ${router.pathname==="/ChatRoom"?"text-rose-500":""}`}>ABOUT</div></Link>
+                            <Link href="/COMPETE/Clist"><div className={`text-white ${router.pathname==="/COMPETE/Clist"?"text-rose-500":""}`}>Clist</div></Link>
                         </li>
                     
                     </ul>
-                    <ul className='mx-5'>
                     
-                        <li className='my-2 text-xl '>
-                            <Link href="/About"><div className={`text-white ${router.pathname==="/About"?"text-rose-500":""}`}>CONTACT</div></Link>
-                        </li>
-                        
-                        
-                        
-                        
-                        
-                    </ul>
                 </div>
             </div>
             <style jsx>

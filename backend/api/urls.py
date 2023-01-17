@@ -18,5 +18,9 @@ from django.urls import path,include
 from .views import *
 urlpatterns = [
     path('ListContest/',ListContest.as_view()),
-    path('ListAllContest/',ListAllContest.as_view())
+    path('ListAllContest/',ListAllContest.as_view()),
+    path('ListCodeForcesContest/',CodeForcesContests.as_view()),
+    path('ListClistAllContest/',ClistContests.as_view()),
+    path('ListAllCodeForcesContest/',ListAllCodeForcesContest.as_view()),
+    path('ListAllClistAllContest/',ListAllClistContest.as_view())
 ]

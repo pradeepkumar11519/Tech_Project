@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Contests(models.Model):
     Name_Of_Contest = models.CharField(null=True,blank=True,default=None, max_length=225)
-    Place = models.CharField(null=True,blank=True,default=None, max_length=225)
+    Place = models.CharField(null=True,blank=True,default="Online", max_length=225)
     Start_Time = models.CharField(null=True,blank=True,default=None, max_length=225)
     Name_Of_Website = models.CharField(null=True,blank=True,default=None, max_length=225)
     OnGoing = models.BooleanField(null=True,blank=True,default=None)
