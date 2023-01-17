@@ -35,6 +35,7 @@ export default function Navbar() {
                     <ul className='flex my-2 '>
                         <li className='mx-10'><a className={`${router.pathname === "/" ? "border-2 border-purple-600 bg-purple-600 p-1 text-white rounded-md" : "hover:border-b-4 border-purple-500 transition-all fade-in-out hover:scale-115  hover:font-bold  hover:text-lg"} text-md font-medium`}><Link href="/">HOME</Link></a></li>
                         <li className='mx-10'><a className={`${router.pathname === "/COMPETE" ? "border-2 border-purple-600 bg-purple-600 p-1 text-white rounded-md" : "hover:border-b-4 border-purple-500 transition-all fade-in-out hover:scale-115 font-medium hover:font-bold text-md hover:text-lg"} text-md font-medium`}><Link href="/COMPETE">COMPETE</Link></a></li>
+                        <li className='mx-10'><a className={`${router.pathname === "/ABOUT" ? "border-2 border-purple-600 bg-purple-600 p-1 text-white rounded-md" : "hover:border-b-4 border-purple-500 transition-all fade-in-out hover:scale-115 font-medium hover:font-bold text-md hover:text-lg"} text-md font-medium`}><Link href="/ABOUT">ABOUT US</Link></a></li>
 
 
 

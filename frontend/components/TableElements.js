@@ -74,12 +74,12 @@ export default function TableElements({AllContests}) {
 																<div className=" break-all p-2  border-l-2 border-black"> {contest?.Name_Of_Website}</div>
 																<div className=" break-all p-2 col-span-2 border-l-2 border-black"> {contest?.Name_Of_Contest}</div>
 																<div className=" break-all p-2 col-span-2 border-l-2 border-black text-indigo-600">
-																{contest.place==="Online"?(
-																	<>
+																{contest?.place==="Online"?(
+																	<div>
 																		Online
-																	</>
+																	</div>
 																):(
-																	<Link href={contest?.Place}>{contest?.Place}</Link>
+																	<Link target={"_blank"} href={contest?.Place}>{contest?.Place}</Link>
 
 																)}
 																		</div>
