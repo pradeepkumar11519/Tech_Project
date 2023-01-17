@@ -19,23 +19,23 @@ export default function Navbar() {
     console.log(router.pathname);
     const { openoffcanvas } = useContext(Context)
     return (
-        <div className={`${invert ? "invert bg-white fixed w-full" : "bg-white fixed w-full"} z-[100000]`}>
+        <div className={`${invert ? "invert bg-black text-white fixed w-full" : "bg-black text-white fixed w-full"} z-[100000]`}>
             <div className='flex justify-between w-full   p-2 py-4 my-auto shadow-xl'>
-                <div id="logo" className='rounded-full p-0 my-auto w-16 h-16'>
-                    <Image className=' invert ' src={logo} />
+                <div id="logo" className='rounded-full bg-transparent p-0 my-auto w-16 h-16'>
+                    <Image className='bg-transparent  ' src={logo} />
                 </div>
 
                 <div id="ul" className='mt-2 overflow-x-hidden  relative h-[50px] hidden lg:block  mx-auto '>
-                    <div id="searchbar" className='absolute right-[-2000px] w-full h-fit transition-all flex  fade-in-out border-2 border-black rounded-full duration-500 p-1 bg-black'>
-                        <input type="text" className='text-white  w-full transition-all bg-transparent fade-in-out p-1 rounded-full  outline-none px-3' placeholder='Search Here' />
-                        <div className='rounded-full bg-purple-600 cursor-pointer'>
-                            <MdSend className='w-8 h-8   rounded-full border-2 invert border-black p-2' />
+                    <div id="searchbar" className='absolute right-[-2000px] w-full h-fit transition-all flex  fade-in-out border-2 border-black rounded-full duration-500 p-1 bg-white'>
+                        <input type="text" className='text-black  w-full transition-all bg-transparent fade-in-out p-1 rounded-full  outline-none px-3' placeholder='Search Here' />
+                        <div className='rounded-full bg-black cursor-pointer hover:scale-110 transition-all fade-in-out'>
+                            <MdSend className='w-8 h-8   rounded-full border-2 focus:ring-4 ring-opacity-50  ring-black transition-all fade-in-out border-black p-2' />
                         </div>
                     </div>
                     <ul className='flex my-2 '>
-                        <li className='mx-10'><a className={`${router.pathname === "/" ? "border-2 border-purple-600 bg-purple-600 p-1 text-white rounded-md" : "hover:border-b-4 border-purple-500 transition-all fade-in-out hover:scale-115  hover:font-bold  hover:text-lg"} text-md font-medium`}><Link href="/">HOME</Link></a></li>
-                        <li className='mx-10'><a className={`${router.pathname === "/COMPETE" ? "border-2 border-purple-600 bg-purple-600 p-1 text-white rounded-md" : "hover:border-b-4 border-purple-500 transition-all fade-in-out hover:scale-115 font-medium hover:font-bold text-md hover:text-lg"} text-md font-medium`}><Link href="/COMPETE">COMPETE</Link></a></li>
-                        <li className='mx-10'><a className={`${router.pathname === "/ABOUT" ? "border-2 border-purple-600 bg-purple-600 p-1 text-white rounded-md" : "hover:border-b-4 border-purple-500 transition-all fade-in-out hover:scale-115 font-medium hover:font-bold text-md hover:text-lg"} text-md font-medium`}><Link href="/ABOUT">ABOUT US</Link></a></li>
+                        <li className='mx-10'><a className={`${router.pathname === "/" ? " p-2 text-white  border-2 border-dashed" : " transition-all fade-in-out hover:scale-115 font-medium hover:font-bold text-md hover:text-lg"} text-md font-medium`}><Link href="/">HOME</Link></a></li>
+                        <li className='mx-10'><a className={`${router.pathname === "/COMPETE" ? " p-2 text-white  border-2 border-dashed" : " transition-all fade-in-out hover:scale-115 font-medium hover:font-bold text-md hover:text-lg"} text-md font-medium`}><Link href="/COMPETE">COMPETE</Link></a></li>
+                        <li className='mx-10'><a className={`${router.pathname === "/ABOUT" ? " p-2 text-white  border-2 border-dashed" : " transition-all fade-in-out hover:scale-115 font-medium hover:font-bold text-md hover:text-lg"} text-md font-medium`}><Link href="/ABOUT">ABOUT US</Link></a></li>
 
 
 

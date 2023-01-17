@@ -8,12 +8,13 @@ import GridLoader from "react-spinners/GridLoader";
 import { useContext, useState } from 'react'
 import Context from '../../context/Context'
 import TableElements from '../../components/TableElements'
+import TableStructure from '../../components/TableStructure'
 
 
 
 export default function Compete() {
 
-	let { nexturl, setnexturl } = useContext(Context)
+	let { nexturl, setnexturl,invert } = useContext(Context)
 	const test1 = useFetchContest()
 	const AllContests = useQuery(['AllContests'], () => {
 		return fetchAllContests(nexturl)
@@ -31,8 +32,9 @@ export default function Compete() {
 	
 
 	return (
-		<div>
+		<div className={`${invert?"invert":""}  bg-black `}>
 			<TableElements AllContests={AllContests}/>
+			
 		</div>
 	)
 }

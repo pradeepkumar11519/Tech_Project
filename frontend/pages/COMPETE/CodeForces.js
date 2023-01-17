@@ -10,7 +10,7 @@ import TableElements from '../../components/TableElements'
 import Context from '../../context/Context'
 export default function CodeForces() {
     let {
-        nexturl,setnexturl} = useContext(Context)
+        nexturl,setnexturl,invert} = useContext(Context)
     const test1 = useFetchCodeForcesContest()
 	const CodeForcesContests = useQuery(['AllCodeForcesContests'], () => {
 		return fetchAllCodeForcesContests(nexturl)
@@ -23,7 +23,7 @@ export default function CodeForces() {
 		refetchOnWindowFocus: false,
 	})
   return (
-    <div>
+    <div className={`${invert?"invert":""}  bg-black `}>
       <TableElements AllContests={CodeForcesContests}/>
     </div>
   )

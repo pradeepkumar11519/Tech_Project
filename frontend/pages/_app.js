@@ -32,7 +32,7 @@ export default function App({ Component, pageProps }) {
 				<Hydrate state={pageProps.dehydratedState}>
 					<ContextProvider>
 						<Navbar/>
-						<div className='pt-24 '>
+						<div className='pt-12 h-full '>
 						<Component {...pageProps} />
 						</div>
 					</ContextProvider>

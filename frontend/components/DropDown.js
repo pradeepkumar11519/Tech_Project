@@ -34,7 +34,7 @@ export default function Dropdown({children}) {
             `}>{children} </a>
              
               
-                <div id="dropdown-menu"  className="dropdown-menu absolute  left-[-48px] top-10 bg-black invert p-2    transition-all fade-in-out translate-y-[-10px] pointer-events-none border-2 border-white">
+                <div id="dropdown-menu"  className="dropdown-menu absolute  left-[-29px] top-10 bg-black invert p-2    transition-all fade-in-out translate-y-[-10px] pointer-events-none border-2 border-white">
                     <ul className='mx-5'>
                       
                         <li className='my-2 text-xl '>

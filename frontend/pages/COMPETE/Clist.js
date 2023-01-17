@@ -9,7 +9,7 @@ import { useContext, useState } from 'react'
 import TableElements from '../../components/TableElements'
 import Context from '../../context/Context'
 export default function Clist() {
-    let {nexturl,setnexturl} = useContext(Context)
+    let {nexturl,setnexturl,invert} = useContext(Context)
     const test1 = useFetchClistContest()
 	const ClistContests = useQuery(['AllClistContests'], () => {
 		return fetchAllClistContests(nexturl)
@@ -22,7 +22,7 @@ export default function Clist() {
 		refetchOnWindowFocus: false,
 	})
   return (
-    <div>
+    <div className={`${invert?"invert":""}  bg-black `}>
       <TableElements AllContests={ClistContests}/>
     </div>
   )
