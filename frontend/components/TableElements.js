@@ -27,6 +27,9 @@ export default function TableElements({ AllContests }) {
 		return (<div className={`mx-auto text-center h-screen bg-white flex items-center justify-center  ${invert?"":"invert"} invert`}><GridLoader /></div>
 		)
 	}
+	if(Contests.length===0){
+		return (<div className={`mx-auto text-center h-screen bg-white flex items-center justify-center font-bold text-3xl  ${invert?"":"invert"} invert`}>NO CONTEST AVAILABLE AT THIS CURRENT MOMENT</div>)
+	}
 	return (
 		<div>
 			<div className="py-16">
@@ -71,6 +74,7 @@ export default function TableElements({ AllContests }) {
 										<div className="text-[14px] font-[600]  text-white p-[12px] align-top border-2 border-[#dee2e685] w-full">
 											PRICE POOL
 										</div>
+										
 									</div>
 								</div>
 
@@ -81,7 +85,7 @@ export default function TableElements({ AllContests }) {
 									next={fetchData}
 
 									hasMore={nexturl !== null}
-									loader={<div className='mx-auto text-center my-20 flex items-center justify-center'><GridLoader /></div>}
+									loader={<div className='mx-auto text-center my-20 flex items-center justify-center invert'><GridLoader /></div>}
 
 
 								>
@@ -154,13 +158,13 @@ export default function TableElements({ AllContests }) {
 														<div className="text-[14px]  font-normal text-[#f1f1f1] bg-[rgb(60,63,68)] p-[8px] border-[#dee2e685] block w-full lg:before:content-none before:content-[attr(data-label)] before:absolute break-all  before:left-0 before:w-1/2 before:pl-[15px] before:font-[600] before:text-[14px] border-2 before:text-start"
 															data-label="ENTRY PRICE"
 														>
-															{contest?.Days_Remaining_For_The_Contest_To_Start}
+															{contest?.Entry_Price}
 														</div>
 
 														<div className="text-[14px]  font-normal text-[#f1f1f1] bg-[rgb(60,63,68)] p-[8px] border-[#dee2e685] block w-full lg:before:content-none before:content-[attr(data-label)] before:absolute break-all  before:left-0 before:w-1/2 before:pl-[15px] before:font-[600] before:text-[14px] border-2 before:text-start"
 															data-label="PRICE POOL"
 														>
-															{contest?.Days_Remaining_For_The_Contest_To_Start}
+															{contest?.Price_Pool}
 														</div>
 
 													</div>

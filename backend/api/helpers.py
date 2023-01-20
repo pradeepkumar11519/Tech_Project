@@ -2,7 +2,9 @@ import datetime
 from datetime import date
 import json
 from bs4 import BeautifulSoup
+from apscheduler.schedulers.background import BackgroundScheduler
 import requests
+from .thread import *
 def getdate():
     today = date.today()
     day = 23
@@ -32,3 +34,16 @@ def gettime():
     return new_time
 
 
+def do_something():
+    url = "http://127.0.0.1:8000/api/v1/Scrap_Data_And_Add_To_Data"
+    api_request = requests.get(url)
+    try:
+        api_request.raise_for_status()
+        return api_request.json()
+    except Exception as e:
+        return 
+def start():
+        scheduler = BackgroundScheduler()
+        x = CreateContestsThread(100)
+        scheduler.add_job(do_something,"interval",minutes=5,id="Scrapping_001",replace_existing=True)
+        scheduler.start()

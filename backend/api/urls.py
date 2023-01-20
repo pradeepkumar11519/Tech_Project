@@ -17,10 +17,11 @@ from django.contrib import admin
 from django.urls import path,include
 from .views import *
 urlpatterns = [
-    path('ListContest/',ListContest.as_view()),
+    path('Scrap_Data_And_Add_To_Data/',Scrap_Data_And_Add_To_Data.as_view()),
     path('ListAllContest/',ListAllContest.as_view()),
-    path('ListCodeForcesContest/',CodeForcesContests.as_view()),
-    path('ListClistAllContest/',ClistContests.as_view()),
-    path('ListAllCodeForcesContest/',ListAllCodeForcesContest.as_view()),
-    path('ListAllClistAllContest/',ListAllClistContest.as_view())
+    path('ListContest/',ListContest.as_view()),
+    path('VerifyOTP/',VerifyOTP.as_view()),
+    path('Login/',Login.as_view()),
+    path('Signup/',Signup.as_view()),
+    
 ]

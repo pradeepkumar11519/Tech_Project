@@ -29,7 +29,7 @@ export default function LoginForm() {
         less.mutate(values)
     }
     return (
-        <div className=" h-full w-full absolute flex top-[-150px] items-center">
+        <div className=" h-full w-full absolute flex top-[-150px] items-center text-white">
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} >
                 {
                     formik => {
@@ -71,7 +71,7 @@ const useLoginUser = () => {
             localStorage.setItem('access_token', response.data.access_token)
             localStorage.setItem('refresh_token', response.data.refresh_token)
             localStorage.setItem('user_details',JSON.stringify(response.data.user_details))
-            router.push('/Shop')
+            router.push('/')
             toast.success('You Have Logged In Successfully!!!', { position: toast.POSITION.TOP_LEFT })
             
         },

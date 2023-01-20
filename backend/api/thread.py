@@ -66,6 +66,8 @@ class CreateContestsThread(threading.Thread):
                     Start_Time=hackathons[i][2],
                     Contest_Duration=hackathons[i][3],
                     OnGoing = False,
+                    Contest_Type = "CONTEST",
+                    Contest_Mode = "ONLINE",
                     Name_Of_Website = 'CodeForces',
                     Days_Remaining_For_The_Contest_To_Start=hackathons[i][4],
                     Days_Remaining_To_Register=hackathons[i][5],
@@ -85,6 +87,8 @@ class CreateContestsThread(threading.Thread):
                 Place = data.find('div', class_='col-md-7 col-sm-8 event').find('a', class_='title_search').get('href'),
                 Start_Time = data.find('div', class_='col-md-5 col-sm-12 start-time').text.replace('\n', '').strip(),
                 OnGoing = True,
+                Contest_Type = "HACKATHONS",
+                Contest_Mode = "OFFLINE",
                 Name_Of_Website = "Clist",
                 Contest_Duration = data.find('div', class_='col-md-3 col-sm-6 duration').text.replace('\n', '').strip()
             )
@@ -93,6 +97,8 @@ class CreateContestsThread(threading.Thread):
                 Name_Of_Contest = data.find('div', class_='col-md-7 col-sm-8 event').find('a', class_='title_search').text.replace('\n', '').strip(),
                 Place = data.find('div', class_='col-md-7 col-sm-8 event').find('a', class_='title_search').get('href'),
                 OnGoing = False,
+                Contest_Type = 'Contest',
+                Contest_Mode = 'OFFLINE',
                 Name_Of_Website = "Clist",
                 Start_Time = data.find('div', class_='col-md-5 col-sm-12 start-time').text.replace('\n', '').strip(),
                 Contest_Duration = data.find('div', class_='col-md-3 col-sm-6 duration').text.replace('\n', '').strip()
@@ -131,27 +137,29 @@ class CreateContestsThread(threading.Thread):
         u_contests = u_c.find_elements(By.CLASS_NAME, '_data__container_jhph2_382')
 
         for c in o_contests:
-            con_details = {}
-            con_details['name'] = c.find_element(By.TAG_NAME, 'span').text
-            con_details['ends'] = c.find_element(By.CLASS_NAME, '_timer__container_jhph2_402').text
-            # print(con_details)
-            open_contests.append(con_details)
-            
+            Contests.objects.create(
+                Name_Of_Contest = c.find_element(By.TAG_NAME, 'span').text,
+                Contest_Type = "HACKATHONS",
+                OnGoing = False,
+                Contest_Mode = "OFFLINE",
+                Name_Of_Website = "CodeChef",
+                Contest_Duration = c.find_element(By.CLASS_NAME, '_timer__container_jhph2_402').text
+            )
         for c in u_contests:
-            con_details = {}
-            con_details['name'] = c.find_element(By.TAG_NAME, 'span').text
             time = c.find_element(By.CLASS_NAME, '_timer__container_jhph2_402').find_elements(By.TAG_NAME, 'p')
-            con_details['starts'] = time[0].text + ' ' + time[1].text
-            # print(con_details)
-            upcoming_contests.append(con_details)
-            print('open',open_contests)
-            print('upcoming',upcoming_contests)
-    def run_codeforces(self):
-            self.codeforces()
-    def run_clist(self):
-            self.clist()
+            Contests.objects.create(
+                Name_Of_Contest =c.find_element(By.TAG_NAME, 'span').text,
+                OnGoing = True,
+                Contest_Type = "HACKATHONS",
+                Contest_Mode = "OFFLINE",
+                Name_Of_Website = "CodeChef",
+                Start_Time = time[0].text + ' ' + time[1].text
+            )
     def run(self):
+        Contests.objects.all().delete()
         self.codeforces()
         self.clist()
+        # self.codechef()
+        return None
     def join(self):
         c = threading.Thread.join(self)

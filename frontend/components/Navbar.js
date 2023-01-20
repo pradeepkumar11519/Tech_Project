@@ -19,7 +19,7 @@ export default function Navbar() {
     console.log(router.pathname);
     const { openoffcanvas } = useContext(Context)
     return (
-        <div className={`${invert ? "invert bg-black text-white fixed w-full" : "bg-black text-white fixed w-full"} z-[100000]`}>
+        <div className={`${invert ? "invert bg-black text-white fixed w-full" : "bg-black text-white fixed w-full"} z-[101]`}>
             <div className='flex justify-between w-full   p-2 py-4 my-auto shadow-xl'>
                 <div id="logo" className='rounded-full bg-transparent p-0 my-auto w-16 h-16'>
                     <Image className='bg-transparent  ' src={logo} />
@@ -35,6 +35,7 @@ export default function Navbar() {
                     <ul className='flex my-2 '>
                         <li className='mx-10'><a className={`${router.pathname === "/" ? " p-2 text-white  border-2 border-dashed" : " transition-all fade-in-out hover:scale-115 font-medium hover:font-bold text-md hover:text-lg"} text-md font-medium`}><Link href="/">HOME</Link></a></li>
                         <li className='mx-10'><a className={`${router.pathname === "/COMPETE" ? " p-2 text-white  border-2 border-dashed" : " transition-all fade-in-out hover:scale-115 font-medium hover:font-bold text-md hover:text-lg"} text-md font-medium`}><Link href="/COMPETE">COMPETE</Link></a></li>
+                        <li className='mx-10'><a className={`${router.pathname === "/CALENDER" ? " p-2 text-white  border-2 border-dashed" : " transition-all fade-in-out hover:scale-115 font-medium hover:font-bold text-md hover:text-lg"} text-md font-medium`}><Link href="/CALENDER">CALENDER</Link></a></li>
                         <li className='mx-10'><a className={`${router.pathname === "/ABOUT" ? " p-2 text-white  border-2 border-dashed" : " transition-all fade-in-out hover:scale-115 font-medium hover:font-bold text-md hover:text-lg"} text-md font-medium`}><Link href="/ABOUT">ABOUT US</Link></a></li>
 
 
@@ -51,7 +52,7 @@ export default function Navbar() {
                     </div>
                     <div id="user_information" className=' -translate-x-[30px]  rounded-full p-2' data-dropdown-button>
                         <button >
-                            <Dropdown >All Contests</Dropdown>
+                            <Dropdown >USER</Dropdown>
                         </button>
                     </div>
                     <div id="user_information" className='my-auto  rounded-full p-2 mx-2'>

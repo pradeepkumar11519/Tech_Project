@@ -18,7 +18,7 @@ export default function Input({ id, type, name, className, label, as, placeholde
                                                 {msg => {
                                                     return (
                                                         <div className="">
-                                                            <p className='p-1 text-center text-red-500 bg-white '>{msg}</p>
+                                                            <p className='p-1 text-center font-[900] text-red-500  '>{msg}</p>
                                                         </div>
                                                     )
                                                 }}

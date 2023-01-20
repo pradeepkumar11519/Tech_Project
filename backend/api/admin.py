@@ -4,3 +4,7 @@ from .models import *
 @admin.register(Contests)
 class ContestAdmin(admin.ModelAdmin):
     list_display = ['id','Place','Name_Of_Contest']
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ["id",'username','email','otp']

@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-@#s8mnu&9#0w$*$+9z#y&+n4tbg7q7!@^da!5&!_hpd$9%#r!g
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+AUTH_USER_MODEL = 'api.User'
 ALLOWED_HOSTS = []
 
 
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api.apps.ApiConfig',
+    'api',
     'rest_framework',
     'corsheaders',
 ]
@@ -90,7 +90,7 @@ DATABASES = {
 # DATABASES = {
 #     'default':{
 #         'ENGINE':'djongo',
-#         'NAME':'django',
+#         'NAME':'Tech_Project_Database',
 #     }
 # }
 # Password validation
@@ -136,3 +136,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "pradeepkumarrebbavarapu705@gmail.com"
+EMAIL_HOST_PASSWORD = "becjwdmphhsixqrn"

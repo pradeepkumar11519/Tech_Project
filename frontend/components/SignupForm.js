@@ -47,19 +47,21 @@ export default function SignupForm() {
 
 	}
 	return (
-		<div className=" h-full w-full absolute flex bottom-[-10px] items-center">
+		<div className=" h-full left-[450px] w-full absolute flex top-[-150px] items-center !text-white">
 			<Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
 				{
 					formik => {
 						return (
-							<Form id="signup" className=' absolute w-[280px]  transition-all fade-in-out left-[450px] overflow-hidden
-							 content-center mx-auto' >
-								<Input className='w-[200px] sm:w-full my-[5px] border-b-2 bg-transparent  outline-none py-[10px]' type="text" id="username" name="username" placeholder='Username' />
-								<Input className='w-[200px] sm:w-full my-[5px] border-b-2 bg-transparent  outline-none py-[10px]' type="email" id="email" name="email" placeholder='Email' />
-								<Input className='w-[200px] sm:w-full my-[5px] border-b-2 bg-transparent  outline-none py-[10px]' type="password" id="password" name="password" placeholder='Password' />
-								<Input className='w-[200px] sm:w-full my-[5px] border-b-2 bg-transparent  outline-none py-[10px]' type="password" id="confirm_password" name="confirm_password" placeholder='Confirm Password' />
-								<button className='sm:w-[85%] py-[10px] px-[30px] block sm:mx-auto bg-gradient-to-r from-orange-600 rounded-full text-white to-yellow-500 my-10' id="submit-btn" type="submit">SIGNUP</button>
-							</Form>
+							<div className="z-[100]">
+                                <Form id="signup" className=" absolute sm:w-[280px]   transition-all fade-in-out left-[20px] sm:left-[50px] overflow-x-hidden">
+                                    <Input className='sm:w-full w-[200px] my-[5px] border-b-2  bg-transparent  outline-none py-[10px] ' type="text" id="username" name="username" placeholder='Username' />
+                                    <Input className='w-[200px] sm:w-full my-[5px] border-b-2 bg-transparent  outline-none py-[10px]' type="email" id="email" name="email" placeholder='Email' />
+                                    <Input className='w-[200px] sm:w-full my-[5px] border-b-2 bg-transparent  outline-none py-[10px]' type="password" id="password" name="password" placeholder='Password' />
+                                    <Input className='w-[200px] sm:w-full my-[5px] border-b-2 bg-transparent  outline-none py-[10px]' type="password" id="confirm_password" name="confirm_password" placeholder='Confirm Password' />
+                                    <button className='sm:w-[85%] py-[10px] px-[30px] block sm:mx-auto bg-gradient-to-r from-orange-600 rounded-full text-white to-yellow-500 my-10 ' id="submit-btn" type="submit">{(less.isLoading && !less.isError)?"Loading...":"SIGNUP"}</button>
+
+                                </Form>
+                            </div>
 						)
 					}
 				}
@@ -72,7 +74,9 @@ export default function SignupForm() {
 
 const CreateUser = (user) => {
 
-	return axios.post('https://youtube-backend-youtube-backen.herokuapp.com/api/v1/Signup/', user)
+	return axios.post('http://127.0.0.1:8000/api/v1/Signup/', user).then((response)=>{
+		return response.data
+	})
 }
 
 
@@ -80,9 +84,9 @@ const useCreateUser = () => {
 	const router = useRouter()
 	return useMutation(CreateUser, {
 		onSuccess: (response) => {
-
-			
-			toast.success('HEY!!! You Have Sigged In Succesfully')
+			router.push('/VerifyOTP')
+			localStorage.setItem("email",response.email)
+			toast.success('OTP has been sent to your mail')
 		},
 		onError: (error) => {
 			const newerror = error.response.data
@@ -90,7 +94,7 @@ const useCreateUser = () => {
 			if (error.message == "Network Error") {
 				toast.error('Network Error Please Try After Some Time', { position: toast.POSITION.TOP_LEFT })
 			}
-			if (newerror.username || newerror.error) {
+			else if (newerror.username || newerror.error) {
 				toast.error(newerror.username ? newerror.username[0] : newerror.error[0], { position: toast.POSITION.TOP_LEFT })
 
 			}
