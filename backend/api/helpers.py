@@ -1,8 +1,10 @@
 import datetime
 from datetime import date
 import json
+from backend.settings import calender_list
 from bs4 import BeautifulSoup
 from apscheduler.schedulers.background import BackgroundScheduler
+
 import requests
 from .thread import *
 def getdate():
@@ -32,6 +34,13 @@ def gettime():
     elif hour == 12:
         new_time = str(12) + current_time[2:] + ' pm'
     return new_time
+def get_contest_month_number(month_name):
+    mydate = datetime.datetime.now()
+    print(mydate.strptime(month_name, '%b').month)
+    return mydate.strptime(month_name, '%b').month
+
+
+
 
 
 def do_something():
@@ -42,8 +51,9 @@ def do_something():
         return api_request.json()
     except Exception as e:
         return 
+
 def start():
         scheduler = BackgroundScheduler()
-        x = CreateContestsThread(100)
-        scheduler.add_job(do_something,"interval",minutes=5,id="Scrapping_001",replace_existing=True)
+        x = CreateContestsThread(100,calender_list)
+        scheduler.add_job(do_something,"interval",days=1,id="Scrapping_001",replace_existing=True)
         scheduler.start()

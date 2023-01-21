@@ -9,13 +9,16 @@ import Image from 'next/image'
 import Dropdown from './DropDown'
 import OffCanvasNavbar from './OffCanvasNavbar'
 import Context from '../context/Context'
+import { useEffect } from 'react'
 export default function Navbar() {
-    const { invert, setinvert } = useContext(Context)
+    const { invert, setinvert,nexturl,setnexturl } = useContext(Context)
+    const router = useRouter()
     const OpenSearchBar = () => {
         document.getElementById('searchbar').classList.toggle(`smenu`)
 
     }
-    const router = useRouter()
+    
+    
     console.log(router.pathname);
     const { openoffcanvas } = useContext(Context)
     return (

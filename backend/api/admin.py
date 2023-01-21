@@ -4,7 +4,13 @@ from .models import *
 @admin.register(Contests)
 class ContestAdmin(admin.ModelAdmin):
     list_display = ['id','Place','Name_Of_Contest']
-
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ["id",'username','email','otp']
+class ContestAdmin(admin.ModelAdmin):
+    list_display = ['id',"username","email","otp"]
+
+@admin.register(Calender)
+class CalenderAdmin(admin.ModelAdmin):
+    list_display = ["id",'user','contest','Added_To_Calender']
+@admin.register(Test)
+class CalenderAdmin(admin.ModelAdmin):
+    list_display = ["user","contest_id"]

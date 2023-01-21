@@ -23,5 +23,8 @@ urlpatterns = [
     path('VerifyOTP/',VerifyOTP.as_view()),
     path('Login/',Login.as_view()),
     path('Signup/',Signup.as_view()),
+    path('AddToCalender/',AddToCalender.as_view()),
+    path('ListCalenderContests/',ListCalenderContests.as_view()),
+    path('ListTodaysCalender/',ListTodaysCalender.as_view()),
     
 ]

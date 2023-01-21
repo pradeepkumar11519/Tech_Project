@@ -8,6 +8,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
     
 class Contests(models.Model):
+    id = models.IntegerField(primary_key=True,unique=True)
     Name_Of_Contest = models.CharField(null=True,blank=True,default="-", max_length=225)
     Place = models.CharField(null=True,blank=True,default="Online", max_length=225)
     Start_Time = models.CharField(null=True,blank=True,default="-", max_length=225)
@@ -22,3 +23,15 @@ class Contests(models.Model):
     Days_Remaining_To_Register = models.CharField(null=True,blank=True,default="-", max_length=225)
     Entry_Price = models.IntegerField(null=True,blank=True,default=0)
     Price_Pool = models.IntegerField(null=True,blank=True,default=0)
+class Calender(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE,to_field="username")
+    contest = models.ForeignKey(Contests,on_delete=models.CASCADE)
+    Added_To_Calender = models.BooleanField(null=True,default=False,blank=True)
+    contest_name = models.CharField(null=True,blank=True,default=None,max_length=225)
+    contest_link = models.URLField(null=True,blank=True,default=None)
+    contest_start_time = models.CharField(null=True,blank=True,default=None,max_length=225)
+
+class Test(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE,to_field="username")
+    contest_id = models.IntegerField(null=True,blank=True,default=None)
+

@@ -15,7 +15,8 @@ class ApiConfig(AppConfig):
     def ready(self):
         from api.helpers import start
         from api.thread import CreateContestsThread
-        x = CreateContestsThread(100)
+        from backend.settings import calender_list
+        x = CreateContestsThread(100,calender_list)
         x.start()
         print("Scraping Started")
         start()

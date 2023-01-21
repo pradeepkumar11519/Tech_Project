@@ -2,16 +2,28 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { QueryClient, dehydrate, useQuery, useMutation } from '@tanstack/react-query'
+import { BsFillCalendarDateFill } from 'react-icons/bs'
 import axios from 'axios'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import GridLoader from "react-spinners/GridLoader";
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import Context from '../context/Context'
+import { toast } from 'react-toastify'
 export default function TableElements({ AllContests }) {
-	const { invert, Contests, setContests } = useContext(Context)
+	const { invert, Contests, setContests, authtoken, AllCalenderContest, user } = useContext(Context)
 	let { nexturl, setnexturl } = useContext(Context)
+	const [contestid, setcontestid] = useState(null)
+	const [CalendarIcon, setCalenderIcon] = useState(null)
 	let [count, setcount] = useState(0)
-
+	const TestResult = useQuery(['TestResult'], () => {
+		return axios.get('http://127.0.0.1:8000/api/v1/AddToCalender/', {
+			headers: {
+				Authorization: 'Bearer ' + authtoken.access_token
+			}
+		}).then((response) => {
+			return response.data
+		})
+	})
 	const fetchData = async () => {
 		await axios.get(nexturl).then((response) => {
 
@@ -23,13 +35,14 @@ export default function TableElements({ AllContests }) {
 		})
 	}
 
-	if ((AllContests.isLoading || AllContests.isFetching) && !AllContests.isError ) {
-		return (<div className={`mx-auto text-center h-screen bg-white flex items-center justify-center  ${invert?"":"invert"} invert`}><GridLoader /></div>
+	if ((AllContests.isLoading || AllContests.isFetching) && !AllContests.isError) {
+		return (<div className={`mx-auto text-center h-screen bg-white flex items-center justify-center  ${invert ? "" : "invert"} invert`}><GridLoader /></div>
 		)
 	}
-	if(Contests.length===0){
-		return (<div className={`mx-auto text-center h-screen bg-white flex items-center justify-center font-bold text-3xl  ${invert?"":"invert"} invert`}>NO CONTEST AVAILABLE AT THIS CURRENT MOMENT</div>)
+	if (Contests.length === 0) {
+		return (<div className={`mx-auto text-center h-screen bg-white flex items-center justify-center font-bold text-3xl  ${invert ? "" : "invert"} invert`}>NO CONTEST AVAILABLE AT THIS CURRENT MOMENT</div>)
 	}
+
 	return (
 		<div>
 			<div className="py-16">
@@ -43,7 +56,7 @@ export default function TableElements({ AllContests }) {
 							<div className="w-full border-collapse ">
 
 								<div className="bg-[#ee2828] hidden lg:block ">
-									<div className="block lg:grid grid-cols-10 text-center ">
+									<div className="block lg:grid grid-cols-11 text-center ">
 										<div className="text-[14px] font-[600]  text-white p-[12px] align-top border-2 w-full border-[#dee2e685] ">
 											S.NO
 										</div>
@@ -74,7 +87,10 @@ export default function TableElements({ AllContests }) {
 										<div className="text-[14px] font-[600]  text-white p-[12px] align-top border-2 border-[#dee2e685] w-full">
 											PRICE POOL
 										</div>
-										
+										<div className="text-[14px] font-[600]  text-white p-[12px] align-top border-2 border-[#dee2e685] w-full">
+											ADD TO CALENDAR
+										</div>
+
 									</div>
 								</div>
 
@@ -94,10 +110,10 @@ export default function TableElements({ AllContests }) {
 										return (
 
 											<div key={contest.id}>
-												<div className={`${contest.OnGoing?"bg-":""}`}>
+												<div className={`${contest.OnGoing ? "bg-" : ""}`}>
 
 
-													<div className="block lg:grid grid-cols-10 mb-[15px] lg:mb-0 lg:text-center text-end relative ">
+													<div className="block lg:grid grid-cols-11 mb-[15px] lg:mb-0 lg:text-center text-end relative ">
 														<div className="text-[14px]  font-normal text-[#f1f1f1] bg-[rgb(60,63,68)] p-[8px] border-[#dee2e685] block w-full lg:before:content-none before:content-[attr(data-label)] before:absolute break-all  before:left-0 before:w-1/2 before:pl-[15px] before:font-[600] before:text-[14px] border-2 before:text-start"
 															data-label="S.NO"
 														>
@@ -166,6 +182,31 @@ export default function TableElements({ AllContests }) {
 														>
 															{contest?.Price_Pool}
 														</div>
+														<div className="text-[14px]  font-normal text-[#f1f1f1] bg-[rgb(60,63,68)] p-[8px] border-[#dee2e685] block w-full lg:before:content-none before:content-[attr(data-label)] before:absolute break-all  before:left-0 before:w-1/2 before:pl-[15px] before:font-[600] before:text-[14px] border-2 before:text-start"
+															data-label="ADD_TO_CALENDER"
+
+														>
+															<div id={contest.id} className='flex justify-end md:justify-center h-full items-center align-middle  my-auto'>
+																<BsFillCalendarDateFill className='cursor-pointer my-auto w-6 h-6' onClick={async () => {
+																	console.log(authtoken.access_token)
+																	await axios.post(`http://127.0.0.1:8000/api/v1/AddToCalender/`, {
+																		contest: contest.id
+																	}, {
+																		headers: {
+																			Authorization: 'Bearer ' + authtoken.access_token
+																		}
+																	}).then((response) => {
+																		document.getElementById(contest.id).style.display = "none"
+																		toast.success('Added To Calender')
+																	}).catch((er) => {
+																		toast.error('Couldnt Add To Calender Retry After SomeTime')
+																	})
+																}} />
+															</div>
+
+
+
+														</div>
 
 													</div>
 
@@ -186,7 +227,7 @@ export default function TableElements({ AllContests }) {
 					}
 					{
 						!AllContests.isLoading && AllContests.isError && (
-							<div className={`${invert?"invert":""} text-white font-bold  bg-black `}>{AllContests?.error?.message}</div>
+							<div className={`${invert ? "invert" : ""} text-white font-bold  bg-black `}>{AllContests?.error?.message}</div>
 						)
 					}
 				</div >
@@ -196,3 +237,4 @@ export default function TableElements({ AllContests }) {
 
 	)
 }
+

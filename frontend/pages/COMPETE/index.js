@@ -9,13 +9,15 @@ import { useContext, useState } from 'react'
 import Context from '../../context/Context'
 import TableElements from '../../components/TableElements'
 import TableStructure from '../../components/TableStructure'
+import { useEffect } from 'react'
 
 
 
 export default function Compete() {
 
-	let { nexturl, setnexturl,invert,Contests,setContests,count,setcount } = useContext(Context)
+	let { nexturl, setnexturl,invert,Contests,setContests,count,setcount,AllCalenderContest } = useContext(Context)
 	const [filterdata,setfilterdata] = useState({mode:"ALL",type:"ALL"})
+	const [CalendarIcon,setCalenderIcon] = useState(null)
 	const AllContests = useQuery(['AllContests'], () => {
 		return fetchAllContests(nexturl)
 	}, {
@@ -26,8 +28,8 @@ export default function Compete() {
 		refetchOnWindowFocus: false,
 	})
 
-	console.log(Contests);
-
+	console.log('Contest',Contests);
+	console.log(nexturl);
 	
 
 	return (
@@ -37,6 +39,7 @@ export default function Compete() {
 				<div id="filter1" className='flex flex-col justify-center mx-20'>
 					<label for="Competition_Mode" className='text-white font-bold text-2xl' >APPLY FILTER</label>
 					<select name="Competition_Mode" id="Competition_Mode" className='px-2 py-1 my-5 outline-none font-bold rounded-md'  onChange={(e)=>{
+						
 						if(e.target.value!=="ALL"){
 							
 								
@@ -51,6 +54,7 @@ export default function Compete() {
 							nexturl = `http://127.0.0.1:8000/api/v1/ListAllContest/`
 							
 						}
+						
 						AllContests.refetch()
 					}}>
 						<option className='font-bold'>ALL</option>

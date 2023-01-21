@@ -9,21 +9,24 @@ from rest_framework_simplejwt.tokens import RefreshToken
 import datetime
 from rest_framework.permissions import IsAuthenticated
 from .helpers import *
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from .models import *
 from .thread import *
 from .pagination import *
 import time
+from django.http import JsonResponse
+from backend.settings import calender_list
 from .emails import *
 from rest_framework.filters import SearchFilter
 # Create your views here.
 
-
+print(calender_list)
 
 class Scrap_Data_And_Add_To_Data(APIView):
     def get(self,request):
         start_time = time.time()
         Contests.objects.all().delete()
-        x = CreateContestsThread(100)
+        x = CreateContestsThread(100,calender_list)
         x.run()
         print("--- %s seconds ---" % (time.time() - start_time))
         return Response("Process Done Succesfully",status=status.HTTP_200_OK)
@@ -108,3 +111,51 @@ class VerifyOTP(APIView):
                 user.save()
             return Response('OTP Succesfully Verified',status=status.HTTP_200_OK)
             
+class AddToCalender(ListCreateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class =  CalenderSerializer
+    queryset = Calender.objects.all()
+    def list(self,request):
+        user = self.request.user
+        test = Test.objects.filter(user = user)
+        serializer = TestSerialzier(test,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
+        
+class ListCalenderContests(ListCreateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get_serializer_class(self):
+         return CalenderSerializer
+    def get_queryset(self):
+        data = self.request.data
+        user = self.request.user
+        print(data)
+        New_Date = f"{data['month'].upper()}/{data['day']}/{datetime.date.today().year}"
+        print(New_Date)
+        calender = Calender.objects.filter(user = user).filter(contest_start_time = New_Date).values()
+        return calender
+    def post(self,request):
+        calender = self.get_queryset()
+        json_calender = json.dumps(list(calender))
+        return Response(json_calender,status=status.HTTP_200_OK)
+        
+class ListTodaysCalender(ListCreateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = CalenderSerializer
+    def list(self,request):
+        calender = self.get_queryset().values()
+        json_calender = json.dumps(list(calender))
+        return Response(json_calender,status=status.HTTP_200_OK)
+    def get_queryset(self):
+        user = self.request.user
+        New_Date = f"{get_contest_month_name(datetime.date.today().month).upper()}/{datetime.date.today().day}/{datetime.date.today().year}"
+        Calender_Contest = Calender.objects.filter(user = user).filter(contest_start_time = New_Date)
+        return Calender_Contest
+
+class SendTestData(ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = TestSerialzier

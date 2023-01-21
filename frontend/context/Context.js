@@ -1,4 +1,4 @@
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import Cookies from 'js-cookie'
 import axios from "axios"
 import { useRouter } from "next/router"
@@ -15,11 +15,14 @@ export const ContextProvider = ({ children }) => {
     const [count,setcount] = useState(0)
     const [invert, setinvert] = useState(false)
     const [Contests, setContests] = useState([])
+    const [CalenderContest,setCalenderContest] = useState(null)
+    const [AllCalenderContest,setAllCalenderContest] = useState([])
     let [nexturl, setnexturl] = useState('http://127.0.0.1:8000/api/v1/ListAllContest/')
     const openoffcanvas = () => {
 
         document.getElementById('offcanvas').classList.toggle('smenu1')
     }
+    
     const Logout = () => {
         setuser(null)
         Cookies.remove('user_details')
@@ -32,6 +35,12 @@ export const ContextProvider = ({ children }) => {
             toast('Logged Out Succesfully', { position: toast.POSITION.TOP_LEFT })
         })
     }
+    useEffect(()=>{
+        if(router.pathname!=="/COMPETE"){
+            setnexturl('http://127.0.0.1:8000/api/v1/ListAllContest/')
+        }
+        
+    },[router.pathname])
     const ContextData = {
         openoffcanvas: openoffcanvas,
         authtoken: authtoken,
@@ -47,6 +56,10 @@ export const ContextProvider = ({ children }) => {
         Logout:Logout,
         count:count,
         setcount:setcount,
+        CalenderContest:CalenderContest,
+        setCalenderContest:setCalenderContest,
+        AllCalenderContest:AllCalenderContest,
+        setAllCalenderContest:setAllCalenderContest
     }
     return (
         <Context.Provider value={ContextData}>
